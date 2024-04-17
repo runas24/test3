@@ -1,34 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-        <title>Digital Clock</title>
-        <style>
-                body {
-                        background-color: #222;
-                        color: #fff;
-                        font-size: 50px;
-                        text-align: center;
-                        margin: 0;
-                        padding: 0;
-                }
-                h1 {
-                        margin: 0;
-                        padding: 0;
-                }
-        </style>
-        <script>
-                function updateclock() {
-                        const now = new date();
-                        const hours = now.gethours().toString().padstart(2, '0');
-                        const minutes = now.getminutes().toString().padstart(2, '0');
-                        const seconds = now.getseconds().toString().padstart(2, '0');
-                        document.getelementbyid('clock').innerhtml = `${hours}:${minutes}:${seconds}`;
-                        settimeout(updateclock, 1000);
-                }
-                window.onload = updateclock;
-        </script>
+    <title>Часы</title>
+    <style>
+        #clock {
+            font-size: 48px;
+            text-align: center;
+            margin-top: 100px;
+        }
+    </style>
 </head>
 <body>
-        <h1 id="clock"></h1>
+    <div id="clock"></div>
+
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+
+            var timeString = hours.toString().padStart(2, '0') + ':' +
+                             minutes.toString().padStart(2, '0') + ':' +
+                             seconds.toString().padStart(2, '0');
+
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        setInterval(updateClock, 1000);
+    </script>
 </body>
 </html>
