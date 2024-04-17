@@ -12,21 +12,30 @@ body {
   height: 100px;
 }
 
-.spinner {
+.coins {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 4px solid #0046ad;
-  border-top-color: transparent;
-  animation: spin 1.5s linear infinite;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
 }
 
-@keyframes spin {
+.coin {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #ffc107;
+  border-radius: 50%;
+  animation: coin-fall 1.5s linear infinite;
+}
+
+@keyframes coin-fall {
+  0% {
+    opacity: 1;
+  }
   100% {
-    transform: translate(-50%, -50%) rotate(360deg);
+    opacity: 0;
+    transform: translateY(300px);
   }
 }
