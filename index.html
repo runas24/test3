@@ -1,56 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Часы</title>
-  <meta charset="UTF-8">
-  <style>
-    .clock {
-      width: 150px;
-      height: 150px;
-      border: 1px solid black;
-      border-radius: 50%;
-      background: linear-gradient(to right, #000000, #ffffff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .hands {
-      width: 50%;
-      height: 50%;
-      border-radius: 50%;
-      background: linear-gradient(to right, #ffffff, #000000);
-    }
-
-    .hour {
-      transform: rotate(rotate(30, 0, 0));
-    }
-
-    .minute {
-      transform: rotate(rotate(6, 0, 0));
-    }
-  </style>
+        <title>Часы</title>
+        <script>
+                // JavaScript код для часов
+                var today = new Date();
+                var hour = today.getHours();
+                var minute = today.getMinutes();
+                document.getElementById("hour").innerHTML = hour;
+                document.getElementById("minute").innerHTML = minute;
+                setInterval(function(){
+                        today.setMinutes(today.getMinutes() + 1);
+                        document.getElementById("minute").innerHTML = minute;
+                }, 1000);
+        </script>
 </head>
 <body>
-  <div class="clock">
-    <div class="hands">
-      <div class="hour"></div>
-      <div class="minute"></div>
-    </div>
-  </div>
-
-  <script>
-    const hour = document.querySelector('.hour');
-    const minute = document.querySelector('.minute');
-
-    setInterval(() => {
-      const date = new Date();
-      const hourAngle = date.getHours() * 30 + date.getMinutes() / 2;
-      const minuteAngle = date.getMinutes() * 6;
-
-      hour.style.transform = `rotate(${hourAngle}deg)`;
-      minute.style.transform = `rotate(${minuteAngle}deg)`;
-    }, 1000);
-  </script>
+        <h1>Часы</h1>
+        <p id="hour"></p>
+        <p id="minute"></p>
 </body>
 </html>
