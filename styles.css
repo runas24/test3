@@ -7,40 +7,67 @@ body {
   overflow: hidden;
 }
 
-.container {
-  width: 400px;
-  height: 300px;
+.loader {
   position: relative;
+  width: 100px;
+  height: 100px;
 }
 
-.credit-card {
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+.keys, .documents, .coins {
   position: absolute;
-  top: 50%;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.keys {
+  top: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+  background-image: url('key.png');
+  animation: keys-float 3s ease-in-out infinite;
 }
 
-.money {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0%;
-  background-color: #00cc00;
-  animation: fill-up 3s ease-in-out forwards;
+.documents {
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('document.png');
+  animation: documents-float 3s ease-in-out infinite;
 }
 
-@keyframes fill-up {
-  0% {
-    height: 0%;
+.coins {
+  top: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('coin.png');
+  animation: coins-float 3s ease-in-out infinite;
+}
+
+@keyframes keys-float {
+  0%, 100% {
+    transform: translateX(-50%) translateY(10%);
   }
-  100% {
-    height: 100%;
+  50% {
+    transform: translateX(-50%) translateY(15%);
+  }
+}
+
+@keyframes documents-float {
+  0%, 100% {
+    transform: translateX(-50%) translateY(40%);
+  }
+  50% {
+    transform: translateX(-50%) translateY(45%);
+  }
+}
+
+@keyframes coins-float {
+  0%, 100% {
+    transform: translateX(-50%) translateY(70%);
+  }
+  50% {
+    transform: translateX(-50%) translateY(75%);
   }
 }
