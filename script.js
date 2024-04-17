@@ -1,4 +1,3 @@
-const loader = document.querySelector('.loader');
 const coinsContainer = document.querySelector('.coins');
 
 function createCoin() {
@@ -12,4 +11,3 @@ function createCoin() {
 }
 
 setInterval(createCoin, 200);
-
