@@ -3,21 +3,19 @@
 <head>
         <title>Часы</title>
         <script>
-                // JavaScript код для часов
-                var today = new Date();
-                var hour = today.getHours();
-                var minute = today.getMinutes();
-                document.getElementById("hour").innerHTML = hour;
-                document.getElementById("minute").innerHTML = minute;
-                setInterval(function(){
-                        today.setMinutes(today.getMinutes() + 1);
-                        document.getElementById("minute").innerHTML = minute;
-                }, 1000);
+                function updateClock() {
+                        var currentTime = new Date();
+                        var hours = currentTime.getHours();
+                        var minutes = currentTime.getMinutes();
+                        var seconds = currentTime.getSeconds();
+                        var timeString = hours + ":" + minutes + ":" + seconds;
+                        document.getElementById("clock").innerHTML = timeString;
+                }
+
+                setInterval(updateClock, 1000);
         </script>
 </head>
 <body>
-        <h1>Часы</h1>
-        <p id="hour"></p>
-        <p id="minute"></p>
+        <div id="clock"></div>
 </body>
 </html>
