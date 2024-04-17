@@ -1,116 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analog Clock</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-        }
-
-        #clock-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        #clock-face {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 180px;
-            height: 180px;
-            margin-top: -90px;
-            margin-left: -90px;
-            border: 1px solid #ccc;
-            border-radius: 50%;
-        }
-
-        #clock-hands {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100px;
-            height: 100px;
-            margin-top: -50px;
-            margin-left: -50px;
-            transform-origin: 50% 50%;
-        }
-
-        #hour-hand {
-            width: 40px;
-            height: 40px;
-            background-color: #000;
-            border-radius: 50%;
-            box-shadow: 0 2px 0 #000;
-        }
-
-        #minute-hand {
-            width: 60px;
-            height: 20px;
-            background-color: #000;
-            border-radius: 3px;
-            box-shadow: 0 2px 0 #000;
-        }
-
-        #second-hand {
-            width: 40px;
-            height: 4px;
-            background-color: #f00;
-            border-radius: 2px;
-            box-shadow: 0 2px 0 #f00;
-        }
-    </style>
+    <title>Digital Clock</title>
 </head>
 <body>
-    <div id="clock-container">
-        <div id="clock-face">
-            <div id="clock-hands">
-                <div id="hour-hand"></div>
-                <div id="minute-hand"></div>
-                <div id="second-hand"></div>
-            </div>
-        </div>
-    </div>
+    <h1 id="clock">00:00:00</h1>
 
     <script>
-        function getTime() {
-            return new Date().toLocaleTimeString();
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, "0");
+            var minutes = now.getMinutes().toString().padStart(2, "0");
+            var seconds = now.getSeconds().toString().padStart(2, "0");
+            document.getElementById("clock").innerText = hours + ":" + minutes + ":" + seconds;
         }
-
-        function drawClock(time) {
-            const clockFace = document.getElementById('clock-face');
-            const clockHands = document.getElementById('clock-hands');
-            const hourHand = document.getElementById('hour-hand');
-            const minuteHand = document.getElementById('minute-hand');
-            const secondHand = document.getElementById('second-hand');
-
-            const date = new Date(time);
-            const hours = date.getHours();
-            const minutes = date.getMinutes();
-            const seconds = date.getSeconds();
-
-            const radiansPerSecond = 2 * Math.PI / 60;
-            const radiansPerMinute = 2 * Math.PI / 60;
-            const radiansPerHour = 2 * Math.PI / 12;
-
-            clockFace.style.transform = `rotate(${date.getUTCHour() * 30}deg)`;
-
-            hourHand.style.transform = `rotate(${hours * radiansPerHour + seconds * radiansPerSecond / 60}rad)`;
-            minuteHand.style.transform = `rotate(${minutes * radiansPerMinute + seconds * radiansPerSecond / 60}rad)`;
-            secondHand.style.transform = `rotate(${seconds * radiansPerSecond}rad)`;
-        }
-
-        setInterval(function() {
-            drawClock(getTime());
-        }, 1000);
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
 </body>
 </html>
