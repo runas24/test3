@@ -1,39 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Animation Loader Bank</title>
-  <style>
-    .loader {
-      width: 100px;
-      height: 10px;
-      border: 1px solid #333;
-      border-radius: 5px;
-      background: linear-gradient(to right, #333, #007bff);
-      animation: loader 2s ease-in-out infinite;
-    }
-
-    @keyframes loader {
-      0% {
-        transform: scale(0);
-      }
-      50% {
-        transform: scale(1);
-      }
-      100% {
-        transform: scale(0);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Loading Animation</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="loader"></div>
-  <script>
-    const loader = document.querySelector('.loader');
-
-    loader.addEventListener('animationend', () => {
-      // Code to execute when animation ends
-    });
-  </script>
+    <div id="loading-container">
+        <div id="loading-bar"></div>
+        <div id="loading-text">Loading...</div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
