@@ -1,24 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Clock</title>
+<html>
+  <head>
+    <title>Часы</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        #clock { font-size: 5em; }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .clock {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 60px;
+        font-weight: bold;
+        color: #333;
+      }
     </style>
-</head>
-<body>
-    <div id="clock"></div>
+  </head>
+  <body>
+    <div class="clock">
+      <span id="hours"></span>
+      <span id="minutes"></span>
+      <span id="seconds"></span>
+    </div>
     <script>
-        function updateClock() {
-            const clock = document.getElementById('clock');
-            const now = new Date();
-            clock.innerHTML = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+      function updateClock() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+      }
+      setInterval(updateClock, 1000);
     </script>
-</body>
+  </body>
 </html>
