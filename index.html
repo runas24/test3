@@ -1,41 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        /* Loader Styles */
-        .loader-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 5px solid #ccc;
-            border-top-color: #3498db;
-            animation: spin 1s linear infinite;
-        }
+  <meta charset="UTF-8">
+  <title>Animation Loader Bank</title>
+  <style>
+    .loader {
+      width: 100px;
+      height: 10px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background: linear-gradient(to right, #333, #007bff);
+      animation: loader 2s ease-in-out infinite;
+    }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    @keyframes loader {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="loader-container"></div>
+  <div class="loader"></div>
+  <script>
+    const loader = document.querySelector('.loader');
 
-    <!-- Your website content here -->
-
-    <script>
-        // Loading animation handling
-        window.onload = () => {
-            const loaderContainer = document.querySelector('.loader-container');
-            loaderContainer.style.display = 'none';
-        };
-    </script>
+    loader.addEventListener('animationend', () => {
+      // Code to execute when animation ends
+    });
+  </script>
 </body>
 </html>
