@@ -2,6 +2,7 @@
 var bot = new ChatGPT('sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ');
 
 // Функция для отправки сообщения пользователя и получения ответа от бота
+// Функция для отправки сообщения пользователя и получения ответа от бота
 async function sendMessage() {
     var userInput = document.getElementById('user-input').value.trim();
     if (userInput !== '') {
