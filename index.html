@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bank Transfer Animation</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Chat</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="loader">
-    <div class="card"></div>
-    <div class="money"></div>
-  </div>
-  <script src="script.js"></script>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div class="chat-message bot">Привет! Чем могу помочь?</div>
+        </div>
+        <input type="text" id="user-input" placeholder="Напишите сообщение...">
+        <button onclick="sendMessage()">Отправить</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
