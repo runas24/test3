@@ -20,7 +20,7 @@ function appendMessage(sender, message) {
 }
 
 async function getChatGPTResponse(input) {
-    const response = await fetch('YOUR_CHATGPT_API_ENDPOINT', {
+    const response = await fetch('sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
