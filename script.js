@@ -1,57 +1,43 @@
-const chatBox = document.getElementById("chat-box");
-const userInput = document.getElementById("user-input");
+const apiKey = 'sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ';
+const apiUrl = 'https://api.openai.com/v1/engines/text-davinci-002/completions';
 
-function sendMessage() {
-    const question = userInput.value.trim();
-    if (question !== "") {
-        addMessage("user", question);
-        getChatGPTResponse(question);
-        userInput.value = "";
+async function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    
+    if (userInput.trim() === '') {
+        return;
+    }
+    
+    appendMessage('user', userInput);
+    document.getElementById('user-input').value = '';
+    
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                prompt: userInput,
+                max_tokens: 150
+            })
+        });
+        
+        const data = await response.json();
+        const botResponse = data.choices[0].text.trim();
+        appendMessage('bot', botResponse);
+    } catch (error) {
+        console.error('Error sending message:', error);
     }
 }
 
-function addMessage(sender, message) {
-    const messageElement = document.createElement("div");
-    messageElement.classList.add("message", sender);
-    messageElement.innerHTML = `<strong>${sender}: </strong>${message}`;
-    chatBox.appendChild(messageElement);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function getChatGPTResponse(question) {
-    const apiKey = "sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ";
-    const endpoint = "https://api.openai.com/v1/chat/completions";
-    const headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`
-    };
-    const data = {
-        "model": "text-davinci-003",
-        "messages": [
-            {
-                "role": "system",
-                "content": "User: " + question
-            }
-        ]
-    };
-
-    fetch(endpoint, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json();
-    })
-    .then(data => {
-        const answer = data.choices[0].message.content;
-        addMessage("ChatGPT", answer);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        addMessage("ChatGPT", "Произошла ошибка при получении ответа.");
-    });
+function appendMessage(sender, message) {
+    const chatDisplay = document.getElementById('chat-display');
+    const messageElement = document.createElement('div');
+    
+    messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+    messageElement.innerText = message;
+    
+    chatDisplay.appendChild(messageElement);
 }
