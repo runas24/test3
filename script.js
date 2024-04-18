@@ -40,13 +40,18 @@ function getChatGPTResponse(question) {
         headers: headers,
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         const answer = data.choices[0].message.content;
         addMessage("ChatGPT", answer);
     })
     .catch(error => {
         console.error("Error:", error);
-        addMessage("ChatGPT", "Произошла ошибка при получении ответа.");
+        addMessage("ChatGPT", "Произошла ошибка при получении ответа: " + error.message);
     });
 }
