@@ -22,6 +22,7 @@
   <input type="text" id="user-input" placeholder="Введите ваш вопрос">
   <button id="send-btn">Отправить</button>
 
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     const apiKey = 'sk-proj-poF1i1G9rQ510AvJ9xs0T3BlbkFJeEyuIiyeNzUlI1Wa9UhI';
     const chatContainer = document.getElementById('chat-container');
@@ -35,29 +36,24 @@
       sendMessage(userQuestion);
       userInput.value = ''; // Очистить поле ввода
 
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://api.openai.com/v1/completions');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.setRequestHeader('Authorization', `Bearer ${apiKey}`);
-      xhr.onload = function() {
-        if (xhr.status === 200) {
-          const data = JSON.parse(xhr.responseText);
-          const botResponse = data.choices[0].text.trim();
-          sendMessage(botResponse);
-        } else {
-          console.error('Ошибка:', xhr.statusText);
-          sendMessage('Извините, возникла ошибка при обработке запроса.');
-        }
-      };
-      xhr.onerror = function() {
-        console.error('Ошибка сети');
-        sendMessage('Извините, возникла ошибка при обработке запроса.');
-      };
-      xhr.send(JSON.stringify({
+      axios.post('https://api.openai.com/v1/completions', {
         model: 'text-davinci-003',
         prompt: userQuestion,
         max_tokens: 150
-      }));
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        }
+      })
+      .then(response => {
+        const botResponse = response.data.choices[0].text.trim();
+        sendMessage(botResponse);
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+        sendMessage('Извините, возникла ошибка при обработке запроса.');
+      });
     });
 
     function sendMessage(message) {
