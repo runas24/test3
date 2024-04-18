@@ -1,36 +1,52 @@
-async function sendMessage() {
-    const userInput = document.getElementById('user-input').value;
-    if (userInput.trim() === '') return;
+const chatBox = document.getElementById("chat-box");
+const userInput = document.getElementById("user-input");
 
-    appendMessage('user', userInput);
-
-    const response = await getChatGPTResponse(userInput);
-    appendMessage('bot', response);
-
-    document.getElementById('user-input').value = '';
+function sendMessage() {
+    const question = userInput.value.trim();
+    if (question !== "") {
+        addMessage("user", question);
+        getChatGPTResponse(question);
+        userInput.value = "";
+    }
 }
 
-function appendMessage(sender, message) {
-    const chatBox = document.getElementById('chat-box');
-    const messageElement = document.createElement('div');
-    messageElement.textContent = message;
-    messageElement.classList.add('chat-message', sender);
+function addMessage(sender, message) {
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message", sender);
+    messageElement.innerHTML = `<strong>${sender}: </strong>${message}`;
     chatBox.appendChild(messageElement);
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-async function getChatGPTResponse(input) {
-    const response = await fetch('sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ' // Замените YOUR_API_KEY на ваш ключ API
-        },
-        body: JSON.stringify({
-            input: input
-        })
-    });
+function getChatGPTResponse(question) {
+    const apiKey = "sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ";
+    const endpoint = "https://api.openai.com/v1/chat/completions";
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+    };
+    const data = {
+        "model": "text-davinci-003",
+        "messages": [
+            {
+                "role": "system",
+                "content": "User: " + question
+            }
+        ]
+    };
 
-    const data = await response.json();
-    return data.output;
+    fetch(endpoint, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const answer = data.choices[0].message.content;
+        addMessage("ChatGPT", answer);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        addMessage("ChatGPT", "Произошла ошибка при получении ответа.");
+    });
 }
