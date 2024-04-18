@@ -1,24 +1,14 @@
 class ChatGPT {
-    constructor() {
-        this.apiKey = null;
-        this.options = {};
-    }
-
-    setAPIKey(apiKey) {
+    constructor(apiKey) {
         this.apiKey = apiKey;
+        this.options = {
+            model: 'gpt-3.5-turbo',
+            // Другие параметры настройки…
+        };
     }
 
-    setOptions(options) {
-        this.options = options;
-    }
-
-    sendMessage(message) {
-        return new Promise((resolve, reject) => {
-            if (!this.apiKey) {
-                reject('API ключ не установлен');
-                return;
-            }
-
+    async sendMessage(message) {
+        try {
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -31,16 +21,17 @@ class ChatGPT {
                 })
             };
 
-            fetch('https://api.chatgpt.com/ask', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        reject(data.error);
-                    } else {
-                        resolve(data.response);
-                    }
-                })
-                .catch(error => reject(error));
-        });
+            const response = await fetch('https://api.chatgpt.com/ask', requestOptions);
+            const responseData = await response.json();
+
+            if (responseData.error) {
+                throw new Error(responseData.error);
+            }
+
+            return responseData.response;
+        } catch (error) {
+            console.error('Ошибка при отправке запроса к API ChatGPT:', error);
+            throw error;
+        }
     }
 }
