@@ -23,7 +23,8 @@ async function getChatGPTResponse(input) {
     const response = await fetch('sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ' // Замените YOUR_API_KEY на ваш ключ API
         },
         body: JSON.stringify({
             input: input
