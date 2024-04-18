@@ -1,65 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChatGPT Chat</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Chatbot</title>
+  <!-- Подключение стилей для чата -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="chat-container">
-  <div id="chat-box"></div>
-  <input type="text" id="user-input" placeholder="Введите ваш вопрос...">
-  <button id="send-btn">Отправить</button>
-</div>
+  <div class="chat-container">
+    <div class="chat-box" id="chat-box"></div>
+    <input type="text" id="user-input" placeholder="Введите ваш вопрос...">
+    <button onclick="sendMessage()">Отправить</button>
+  </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://unpkg.com/@openai/chatgpt"></script>
-<script>
-// Создание экземпляра бота
-var bot = new ChatGPT();
-
-// Установка API-ключа
-bot.setAPIKey('sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ');
-
-// Установка модели языка
-bot.setOptions({
-  model: 'gpt-3.5-turbo'
-});
-
-// Функция для добавления сообщения в чат
-function addMessage(message, sender) {
-  var chatBox = document.getElementById('chat-box');
-  var messageElement = document.createElement('div');
-  messageElement.classList.add('message', sender);
-  messageElement.textContent = message;
-  chatBox.appendChild(messageElement);
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-// Функция для обработки ввода пользователя
-function handleUserInput() {
-  var userInput = document.getElementById('user-input').value.trim();
-  if (userInput !== '') {
-    addMessage(userInput, 'user');
-    document.getElementById('user-input').value = '';
-    // Отправка запроса к боту и получение ответа
-    bot.sendMessage(userInput).then(function(response) {
-      addMessage(response, 'bot');
+  <!-- Подключение библиотеки ChatGPT -->
+  <script src="chatgpt.js"></script>
+  <script>
+    var bot = new ChatGPT();
+    bot.setAPIKey('sk-proj-K50ad3mNqPifd08rsIu0T3BlbkFJ3dwbQwYLFThn9coUZNaZ');
+    bot.setOptions({
+      model: 'gpt-3.5-turbo',
+      // Дополнительные настройки бота...
     });
-  }
-}
 
-// Обработка нажатия кнопки отправки сообщения
-document.getElementById('send-btn').addEventListener('click', function() {
-  handleUserInput();
-});
+    function sendMessage() {
+      var userInput = document.getElementById('user-input').value;
+      appendMessage('user', userInput);
 
-// Обработка нажатия клавиши Enter при вводе сообщения
-document.getElementById('user-input').addEventListener('keypress', function(event) {
-  if (event.key === 'Enter') {
-    handleUserInput();
-  }
-});
-</script>
+      // Отправка запроса к боту
+      bot.sendMessage(userInput)
+        .then(response => {
+          appendMessage('bot', response);
+        })
+        .catch(error => {
+          console.error('Ошибка при получении ответа от бота:', error);
+        });
+    }
+
+    function appendMessage(sender, message) {
+      var chatBox = document.getElementById('chat-box');
+      var messageElement = document.createElement('div');
+      messageElement.classList.add('message', sender);
+      messageElement.textContent = message;
+      chatBox.appendChild(messageElement);
+    }
+  </script>
 </body>
 </html>
